@@ -1,0 +1,10 @@
+Criar migration:
+  yarn typeorm migration:create -n CreateCategories
+
+Rodar migration:
+  yarn typeorm migration:run
+
+Ver ip do docker
+  docker exec database_ignite cat /etc/hosts
+
+docker-compose up --build --force-recreate  
