@@ -1,3 +1,6 @@
+import { injectable, inject } from "tsyringe";
+
+import { AppError } from "../../../../errors/AppError";
 import { ISpecificationsRepository } from "../../repositories/ISpecificationsRepository";
 
 interface IRequestDTO {
@@ -5,19 +8,23 @@ interface IRequestDTO {
   description: string;
 }
 
+@injectable()
 class CreateSpecificationUseCase {
-  constructor(private specificationsRepository: ISpecificationsRepository) {}
+  constructor(
+    @inject("SpecificationsRepository")
+    private specificationsRepository: ISpecificationsRepository
+  ) {}
 
-  execute({ name, description }: IRequestDTO): void {
-    const categoryAlreadyExists = this.specificationsRepository.findByName(
+  async execute({ name, description }: IRequestDTO): Promise<void> {
+    const categoryAlreadyExists = await this.specificationsRepository.findByName(
       name
     );
 
     if (categoryAlreadyExists) {
-      throw new Error("Specification already exists");
+      throw new AppError("Specification already exists");
     }
 
-    this.specificationsRepository.create({ name, description });
+    await this.specificationsRepository.create({ name, description });
   }
 }
 
