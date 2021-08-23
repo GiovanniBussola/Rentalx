@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { Router } from "express";
 
 import { authenticateRoutes } from "./authenticate.routes";
@@ -12,7 +11,7 @@ const router = Router();
 
 router.use("/categories", categoriesRoutes);
 router.use("/specifications", specificationsRoutes);
-router.use("/sessions", authenticateRoutes);
+router.use("/", authenticateRoutes);
 router.use("/users", usersRoutes);
 router.use("/cars", carsRoutes);
 router.use("/rentals", rentalsRoutes);
